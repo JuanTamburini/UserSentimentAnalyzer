@@ -35,6 +35,9 @@ namespace AIS.Service.Sentiment.Strategies
 				}
 			}
 
+			// El coeficiente indicaria un peso extra a las coincidencias de esta estrategia.
+			sentimentScorePartial.Score *= ScoreCoefficient;
+
 			return await Task.FromResult(sentimentScorePartial);
 		}
 	}
