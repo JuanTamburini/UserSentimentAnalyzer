@@ -4,7 +4,7 @@ using AIS.Service.Sentiment.Classes;
 using AIS.Service.Sentiment.Strategies;
 using System.Text;
 
-//
+// Necesitamos este encoding para que detecte bien los emojis.
 Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
@@ -23,6 +23,7 @@ while (true)
 	string input = Console.ReadLine();
 	if (int.TryParse(input, out var opcionIngresada))
 	{
+		// Modificar si se agregan opciones
 		if (opcionIngresada > 2 || opcionIngresada < 1)
 		{
 			Console.WriteLine("Opción desconocida");
@@ -36,22 +37,23 @@ while (true)
 	}
 	else
 		Console.WriteLine($"\nOpción inexistente (presione cualquier tecla para continuar)");
-	Console.ReadKey();
 }
 
+List<BaseSentimentStrategy> EstrategiasDisponibles() => new() { new UnhappyCharStrategy() };
 
-async void RunManualInputMethod() 
+async Task<SentimentScore> Analize(List<SentimentInput> inputs)
 {
-	Console.WriteLine();
-	Console.WriteLine("Ingrese el texto a analizar:");
-	string text = Console.ReadLine();
-
 	var sentimentScore = new SentimentScore();
 	foreach (var estrategia in estrategias)
 	{
-		var score = await estrategia.AnalizeAsync(new() { new SentimentInput { Data = text } });
+		var score = await estrategia.AnalizeAsync(inputs);
 		sentimentScore.ScoreDetails.Add(score);
 	}
+	return sentimentScore;
+}
+
+void LogScore(SentimentScore sentimentScore)
+{
 	Console.WriteLine();
 	Console.WriteLine("Score total: " + sentimentScore.TotalScore);
 	foreach (var score in sentimentScore.ScoreDetails)
@@ -60,6 +62,18 @@ async void RunManualInputMethod()
 	}
 }
 
+async void RunManualInputMethod() 
+{
+	Console.WriteLine();
+	Console.WriteLine("Ingrese el texto a analizar:");
+	string text = Console.ReadLine();
+
+	var score = await Analize(new() { new SentimentInput { Data = text } });
+	LogScore(score);
+}
+
 async void RunPrestablishedInputMethod()
-{ }
-List<BaseSentimentStrategy> EstrategiasDisponibles() => new() { new UnhappyCharStrategy() };
+{
+	Console.WriteLine("Sin implementar");
+}
+

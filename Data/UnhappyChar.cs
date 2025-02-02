@@ -13,6 +13,7 @@ internal class UnhappyChar
 	}
 
     // Defino 4 casos: Positivo (0), Neutral (5), Negativo (10), Muy negativo (15 o 20)
+    // TODO: Faltan emojis o chars similares (:/, :-(, etc)
 	public static List<UnhappyChar> GetUnhappyCharsMock () => new List<UnhappyChar>
 	{
 	    new("\U0001F600", 0), // Grinning Face 😀
