@@ -39,7 +39,7 @@ while (true)
 		Console.WriteLine($"\nOpción inexistente (presione cualquier tecla para continuar)");
 }
 
-List<BaseSentimentStrategy> EstrategiasDisponibles() => new() { new UnhappyCharStrategy() };
+List<BaseSentimentStrategy> EstrategiasDisponibles() => new() { new UnhappyCharStrategy(), new UnhappyWordsStrategy() };
 
 async Task<SentimentScore> Analize(List<SentimentInput> inputs)
 {
