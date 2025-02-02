@@ -13,7 +13,7 @@ internal class UnhappyChar
 	}
 
     // Defino 4 casos: Positivo (0), Neutral (5), Negativo (10), Muy negativo (15 o 20)
-	public static List<UnhappyChar> GetUnhappyCharsMock = new List<UnhappyChar>
+	public static List<UnhappyChar> GetUnhappyCharsMock () => new List<UnhappyChar>
 	{
 	    new("\U0001F600", 0), // Grinning Face 😀
         new("\U0001F601", 0), // Grinning Face with Smiling Eyes 😁
