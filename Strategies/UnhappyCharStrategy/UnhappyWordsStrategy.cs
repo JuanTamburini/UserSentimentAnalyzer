@@ -27,7 +27,7 @@ namespace AIS.Service.Sentiment.Strategies
 
 		public async override Task<SentimentStrategyScore> AnalizeAsync(List<SentimentInput> sentimentInput)
         {
-            var score = new SentimentStrategyScore();
+            var score = new SentimentStrategyScore() { Description = Description };
 			foreach(var input in sentimentInput)
 			{
 				var inputText = input.Data;
