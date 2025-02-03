@@ -11,20 +11,26 @@ public class WordCaseStrategy : BaseSentimentStrategy
 	public WordCaseStrategy()
 	{
 		Description = "WordCaseStrategy";
-		ScoreCoefficient = byte.MaxValue;
+		ScoreCoefficient = 1;
 	}
-
-	public int Score;
 
 	public override async Task<SentimentStrategyScore> AnalizeAsync(List<SentimentInput> sentimentInput)
 	{
-		var score = new SentimentStrategyScore();
+		var score = new SentimentStrategyScore() { Description = Description };
 
-		//foreach (var input in sentimentInput)
-		//{
-		//	score.Score += CheckForWords(input.Data, UnhappyWords);
-		//}
-
-		return score;
+		foreach (var input in sentimentInput)
+		{
+			var text = input.Data.Replace(" ", ""); // texto sin espacios.
+			int caseCount = 0;
+			foreach (var c in text)
+			{
+				if (char.IsUpper(c))
+					caseCount++;
+			}
+			if (caseCount > text.Length / 2) // Más de la mitad de los caracteres son mayúsculas.
+				score.Score++; 
+		}
+		score.Score *= ScoreCoefficient;
+		return await Task.FromResult(score);
 	}
 }
